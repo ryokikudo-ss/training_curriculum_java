@@ -34,7 +34,7 @@ public class CalendarsController {
     model.addAttribute("weekDays", weekDays);
     return "calendars/index";
   }
-ssue2
+
   // 予定の保存
   @PostMapping("/calendars")
   public String create(@ModelAttribute("planForm") @Validated PlanForm planForm, BindingResult result) {
@@ -57,7 +57,7 @@ ssue2
 
     for (int x = 0; x < 7; x++) {
       Map<String, Object> dayMap = new HashMap<>();
-      LocalDate currentDate = todaysDate.plusDays(x);
+      LocalDate currentDate = today.plusDays(x);
 
       List<String> plansForDate = new ArrayList<>();
       for (PlanEntity plan : plans) {
@@ -68,12 +68,12 @@ ssue2
 
       dayMap.put("month", currentDate.getMonthValue());
       dayMap.put("date", currentDate.getDayOfMonth());
-      dayMap.put("plans", todayPlans);
+      dayMap.put("plans", plansForDate);
 
       weekDays.add(dayMap);
     }
 
-    return weekPlans;
+    return weekDays;
   }
 
 
