@@ -34,7 +34,7 @@ public class CalendarsController {
     model.addAttribute("weekDays", weekDays);
     return "calendars/index";
   }
-
+ssue2
   // 予定の保存
   @PostMapping("/calendars")
   public String create(@ModelAttribute("planForm") @Validated PlanForm planForm, BindingResult result) {
@@ -50,19 +50,19 @@ public class CalendarsController {
   private List<Map<String, Object>> getWeek() {
     List<Map<String, Object>> weekDays = new ArrayList<>();
 
-    LocalDate todaysDate = LocalDate.now();
-    List<PlanEntity> plans = planRepository.findByDateBetween(todaysDate, todaysDate.plusDays(6));
+    LocalDate today = LocalDate.now();
+    List<PlanEntity> plans = planRepository.findByDateBetween(today, today.plusDays(6));
 
-    String[] wdays = {"(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)"};
+    String[] weekDayLabels = {"(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)"};
 
     for (int x = 0; x < 7; x++) {
       Map<String, Object> dayMap = new HashMap<>();
       LocalDate currentDate = todaysDate.plusDays(x);
 
-      List<String> todayPlans = new ArrayList<>();
+      List<String> plansForDate = new ArrayList<>();
       for (PlanEntity plan : plans) {
           if (plan.getDate().equals(currentDate)) {
-              todayPlans.add(plan.getPlan());
+              plansForDate.add(plan.getPlan());
           }
       }
 
@@ -73,7 +73,7 @@ public class CalendarsController {
       weekDays.add(dayMap);
     }
 
-    return weekDays;
+    return weekPlans;
   }
 
 
