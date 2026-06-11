@@ -44,7 +44,7 @@ public class CalendarsController {
       newPlan.setPlan(planForm.getPlan());
       planRepository.insert(newPlan);
     }
-    return "redirect:/calendars";
+    return "redirect:/"; //すぐ反映させるためにリダイレクト
   }
 
   private List<Map<String, Object>> getWeek() {
@@ -54,6 +54,8 @@ public class CalendarsController {
     List<PlanEntity> plans = planRepository.findByDateBetween(today, today.plusDays(6));
 
     String[] weekDayLabels = {"(日)", "(月)", "(火)", "(水)", "(木)", "(金)", "(土)"};
+
+    
 
     for (int x = 0; x < 7; x++) {
       Map<String, Object> dayMap = new HashMap<>();
@@ -67,8 +69,12 @@ public class CalendarsController {
       }
 
       dayMap.put("month", currentDate.getMonthValue());
+      int weekDayNum = (today.getDayOfWeek().getValue() + x) % 7; // 曜日を0-6の範囲で計算
+
+      dayMap.put("month", currentDate.getMonthValue());
       dayMap.put("date", currentDate.getDayOfMonth());
       dayMap.put("plans", plansForDate);
+      dayMap.put("weekDayLabels", weekDayLabels[weekDayNum]);
 
       weekDays.add(dayMap);
     }
