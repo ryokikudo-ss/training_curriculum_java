@@ -34,7 +34,7 @@ public class CalendarsController {
     model.addAttribute("weekDays", weekDays);
     return "calendars/index";
   }
-ssue2
+
   // 予定の保存
   @PostMapping("/calendars")
   public String create(@ModelAttribute("planForm") @Validated PlanForm planForm, BindingResult result) {
